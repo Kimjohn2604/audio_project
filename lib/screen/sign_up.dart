@@ -13,7 +13,7 @@ class SignUpScreen extends StatelessWidget {
       body: Center(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          height: MediaQuery.of(context).size.height * 0.6,
+          height: MediaQuery.of(context).size.height * 0.8,
           width: double.infinity,
           color: Appcolor.backgroundcolor,
           child: Column(
@@ -31,6 +31,7 @@ class SignUpScreen extends StatelessWidget {
                 width: 50,
               ),
               textBox(context,
+                  verticalPadding: 15,
                   backgroundColor: Appcolor.backgroundcolor,
                   micIcon: null,
                   title: "VoiceSens Sample Web Application",
@@ -47,6 +48,7 @@ class SignUpScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     textBox(context,
+                        verticalPadding: 15,
                         backgroundColor: Appcolor.backgroundcolor,
                         title: "User Signin",
                         micIcon: null,
@@ -80,8 +82,12 @@ class SignUpScreen extends StatelessWidget {
                 height: 30,
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, "voice_enrollment");
+                  print("something");
+                },
                 child: textBox(context,
+                    verticalPadding: 10,
                     backgroundColor: Appcolor.mainColor,
                     micIcon: null,
                     title: "Next",

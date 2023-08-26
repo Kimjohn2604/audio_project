@@ -1,4 +1,5 @@
 import 'package:app/component/colors.dart';
+import 'package:app/screen/init.dart';
 import 'package:app/screen/sign_in.dart';
 import 'package:app/screen/sign_up.dart';
 import 'package:app/screen/voice_enrollment.dart';
@@ -18,7 +19,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Appcolor.mainBlackColor),
         useMaterial3: true,
       ),
-      home: const VoiceEnrollMent(),
+      home: const InitialScreen(),
+      routes: {
+        "register": (context) => const SignUpScreen(),
+        "signin": (context) => const SignInScreen(),
+        "voice_enrollment": (context) => const VoiceEnrollMent()
+      },
     );
   }
 }

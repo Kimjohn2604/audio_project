@@ -36,6 +36,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 width: 50,
               ),
               textBox(context,
+                  verticalPadding: 15,
                   backgroundColor: Appcolor.backgroundcolor,
                   title: "VoiceSens Sample Web Application",
                   micIcon: null,
@@ -52,6 +53,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: Column(
                   children: [
                     textBox(context,
+                        verticalPadding: 15,
                         backgroundColor: Appcolor.backgroundcolor,
                         title: "User Signin",
                         micIcon: null,
@@ -78,8 +80,11 @@ class _SignInScreenState extends State<SignInScreen> {
                 height: 30,
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                 
+                },
                 child: textBox(context,
+                    verticalPadding: 10,
                     micIcon: null,
                     backgroundColor: Appcolor.mainColor,
                     title: "Next",

@@ -7,17 +7,20 @@ Widget textBox(BuildContext context,
     required String title,
     required IconData? micIcon,
     required TextStyle styleTitle,
-    required bool setBoder}) {
+    required bool setBoder,
+    required double verticalPadding}) {
   return Container(
     alignment: Alignment.center,
     decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(5),
         border: setBoder ? Border.all(width: 0.3) : null),
-    padding: const EdgeInsets.symmetric(vertical: 15),
-    child: Row(mainAxisAlignment: MainAxisAlignment.center,
+    padding: EdgeInsets.symmetric(vertical: verticalPadding),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(micIcon),
+        Icon(micIcon, size: 20,),
+        const SizedBox(width: 10,),
         Text(title, style: styleTitle),
       ],
     ),
@@ -35,7 +38,7 @@ Widget customTextForm(BuildContext context,
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5), border: Border.all(width: 0.1)),
     child: TextFormField(
-      cursorHeight: 20,
+        cursorHeight: 20,
         onChanged: onChanged(),
         autovalidateMode: AutovalidateMode.always,
         decoration: InputDecoration(
@@ -48,5 +51,110 @@ Widget customTextForm(BuildContext context,
         ),
         onSaved: null,
         validator: validator!("")),
+  );
+}
+
+Widget authentiactionBox(BuildContext context,
+    {required String bigText, required String smallText, required themeColor}) {
+  return Container(
+    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+    decoration: BoxDecoration(
+        color: Appcolor.backgroundcolor,
+        border: Border.all(width: 1, color: themeColor),
+        borderRadius: BorderRadius.circular(5)),
+    height: 70,
+    width: double.infinity,
+    child: Row(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(right: 20),
+          color: Appcolor.mainColor,
+          height: 40,
+          width: 40,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              bigText,
+              style: AppStyle.headlineStyle3.copyWith(color: themeColor),
+            ),
+            Text(
+              smallText,
+              style: AppStyle.headlineStyle4.copyWith(color: themeColor),
+            )
+          ],
+        )
+      ],
+    ),
+  );
+}
+
+Widget warningBox(BuildContext context, {required bool showDetail}) {
+  return Container(
+    decoration: BoxDecoration(
+      color: Appcolor.backgroundcolor,
+      border: Border.all(width: 1, color: Appcolor.iconColor2),
+    ),
+    padding: const EdgeInsets.only(left: 15, top: 15, right: 5, bottom: 15),
+    child: Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Your voice sample",
+                    style:
+                        AppStyle.headlineStyle3.copyWith(color: Appcolor.red)),
+                Text("This could be",
+                    style: AppStyle.headlineStyle4
+                        .copyWith(color: Appcolor.iconColor2)),
+                showDetail
+                    ? Column(
+                        children: [
+                          const SizedBox(height: 10),
+                          detailedContent(
+                              text:
+                                  "The word you have spoken aren't entirely correct"),
+                          detailedContent(
+                              text:
+                                  "The word you have spoken aren't entirely correct"),
+                          detailedContent(
+                              text:
+                                  "The word you have spoken aren't entirely correct"),
+                        ],
+                      )
+                    : Container(),
+              ],
+            ),
+            const Icon(
+              Icons.close,
+              size: 18,
+              color: Appcolor.red,
+            )
+          ],
+        )
+      ],
+    ),
+  );
+}
+
+Widget detailedContent({required String text}) {
+  return Row(
+    children: [
+      Container(
+        margin: const EdgeInsets.only(right: 10),
+        width: 5,
+        height: 5,
+        decoration:
+            const BoxDecoration(shape: BoxShape.circle, color: Appcolor.red),
+      ),
+      Text(text,
+          style: AppStyle.headlineStyle4.copyWith(color: Appcolor.iconColor2))
+    ],
   );
 }

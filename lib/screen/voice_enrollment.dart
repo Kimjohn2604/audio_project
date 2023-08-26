@@ -13,7 +13,7 @@ class VoiceEnrollMent extends StatelessWidget {
       body: Center(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          height: MediaQuery.of(context).size.height * 0.6,
+          height: MediaQuery.of(context).size.height * 0.8,
           width: double.infinity,
           color: Appcolor.backgroundcolor,
           child: Column(
@@ -24,17 +24,18 @@ class VoiceEnrollMent extends StatelessWidget {
                     image: const DecorationImage(
                       fit: BoxFit.fitWidth,
                       image: AssetImage(
-                        "assets/items/audio.png",
+                        "assets/items/tma.jpg",
                       ),
                     )),
                 height: 50,
-                width: 50,
+                width: 100,
               ),
               textBox(context,
+                  verticalPadding: 15,
                   micIcon: null,
                   backgroundColor: Appcolor.backgroundcolor,
                   title: "VoiceSens Sample Web Application",
-                  styleTitle: AppStyle.headlineStyle2,
+                  styleTitle: AppStyle.headlineStyle1,
                   setBoder: false),
               Container(
                 padding:
@@ -47,10 +48,11 @@ class VoiceEnrollMent extends StatelessWidget {
                 child: Column(
                   children: [
                     textBox(context,
+                        verticalPadding: 15,
                         backgroundColor: Appcolor.backgroundcolor,
                         title: "User Voice Print Enrollment",
                         micIcon: null,
-                        styleTitle: AppStyle.headlineStyle3,
+                        styleTitle: AppStyle.headlineStyle2,
                         setBoder: true),
                     Container(
                       decoration:
@@ -59,33 +61,30 @@ class VoiceEnrollMent extends StatelessWidget {
                       width: double.infinity,
                     ),
                     textBox(context,
+                        verticalPadding: 5,
                         backgroundColor: Appcolor.backgroundcolor,
                         title: "Start Recording",
                         micIcon: Icons.mic,
                         styleTitle: AppStyle.headlineStyle4,
                         setBoder: false),
                     textBox(context,
-                        backgroundColor: Appcolor.backgroundcolor,
+                        verticalPadding: 5,
+                        backgroundColor: Appcolor.textColor,
                         title: "Stop Recording",
                         micIcon: Icons.mic_off,
                         styleTitle: AppStyle.headlineStyle4,
-                        setBoder: false)
+                        setBoder: false),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                   /*  authentiactionBox(context,
+                        bigText: "Please recite the following words",
+                        smallText: "months truth capacitance galley agreement",
+                        themeColor: Appcolor.mainColor) */
+                        warningBox(context,showDetail: false),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 30,
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: textBox(context,
-                    micIcon: null,
-                    backgroundColor: Appcolor.mainColor,
-                    title: "Next",
-                    styleTitle: AppStyle.headlineStyle4
-                        .copyWith(color: Appcolor.whiteColor),
-                    setBoder: false),
-              )
             ],
           ),
         ),
