@@ -4,6 +4,7 @@ import 'package:app/screen/init.dart';
 import 'package:app/screen/register.dart';
 import 'package:app/screen/sign_in.dart';
 import 'package:app/screen/user.dart';
+import 'package:app/screen/validation.dart';
 import 'package:app/screen/voice_enrollment.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         Approutes.USER: (context) => const UserScreen(),
         Approutes.REGISTER: (context) => const RegisterScreen(),
         Approutes.SIGN_IN: (context) => const SignInScreen(),
-        Approutes.VOICE_ENROLLMENT: (context) => const VoiceEnrollMent()
+         Approutes.VALIDATION: (context) => const ValidationScreen(),
+        /* Approutes.VOICE_ENROLLMENT: (context) => const VoiceEnrollMent() */
       },
     );
   }

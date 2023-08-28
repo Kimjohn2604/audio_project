@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 Widget textBox(BuildContext context,
     {required Color backgroundColor,
     required String title,
-    required IconData? micIcon,
     required TextStyle styleTitle,
     required bool setBoder,
     required double verticalPadding}) {
   return Container(
-    alignment: Alignment.center,
     decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(5),
@@ -19,13 +17,6 @@ Widget textBox(BuildContext context,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(
-          micIcon,
-          size: 20,
-        ),
-        const SizedBox(
-          width: 10,
-        ),
         Text(title, style: styleTitle),
       ],
     ),
@@ -53,8 +44,8 @@ Widget navigationButton(
 Widget customTextForm(BuildContext context,
     {required String labelText,
     required IconData icon,
-    required Function(String?)? validator,
-    required Function onChanged}) {
+    required String? Function(String?)? validator,
+    required void Function(String)? onChanged}) {
   String? textValue;
   return Container(
     margin: const EdgeInsets.only(top: 20),
@@ -63,9 +54,7 @@ Widget customTextForm(BuildContext context,
         borderRadius: BorderRadius.circular(5), border: Border.all(width: 0.1)),
     child: TextFormField(
         cursorHeight: 20,
-        onChanged: (value) {
-          textValue = value;
-        },
+        onChanged: onChanged,
         autovalidateMode: AutovalidateMode.always,
         decoration: InputDecoration(
           icon: Icon(icon),
@@ -76,9 +65,7 @@ Widget customTextForm(BuildContext context,
           focusedBorder: InputBorder.none,
         ),
         onSaved: null,
-        validator: (String? value) {
-          return value!.contains('@') ? 'Do not use the @ char.' : null;
-        }),
+        validator: validator),
   );
 }
 
@@ -185,11 +172,12 @@ Widget detailedContent(BuildContext context, {required String text}) {
               shape: BoxShape.circle, color: Appcolor.mainBlackColor),
         ),
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.82,
+          width: MediaQuery.of(context).size.width * 0.7,
           child: Text(text,
               maxLines: 5,
-              style: AppStyle.headlineStyle2
-                  .copyWith(color: Appcolor.mainBlackColor,fontWeight: FontWeight.normal)),
+              style: AppStyle.headlineStyle2.copyWith(
+                  color: Appcolor.mainBlackColor,
+                  fontWeight: FontWeight.normal)),
         )
       ],
     ),

@@ -13,7 +13,7 @@ class InitialScreen extends StatelessWidget {
       body: Center(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          height: MediaQuery.of(context).size.height * 0.5,
+          height: MediaQuery.of(context).size.height * 0.6,
           width: double.infinity,
           color: Appcolor.backgroundcolor,
           child: Column(
@@ -30,12 +30,13 @@ class InitialScreen extends StatelessWidget {
                 height: 147,
                 width: 302,
               ),
-              const SizedBox(height: 100,),
+              const SizedBox(
+                height: 100,
+              ),
               textBox(context,
                   verticalPadding: 20,
                   backgroundColor: Appcolor.backgroundcolor,
                   title: "VoiceSens Sample Web Application",
-                  micIcon: null,
                   styleTitle: AppStyle.headlineStyle2,
                   setBoder: false),
               GestureDetector(
@@ -46,7 +47,8 @@ class InitialScreen extends StatelessWidget {
                     context,
                     backgroundColor: Appcolor.mainColor,
                     title: 'Login',
-                    styleTitle: AppStyle.headlineStyle4.copyWith(color: Appcolor.whiteColor),
+                    styleTitle: AppStyle.headlineStyle4
+                        .copyWith(color: Appcolor.whiteColor),
                   )),
               const SizedBox(
                 height: 15,
@@ -59,7 +61,8 @@ class InitialScreen extends StatelessWidget {
                     context,
                     backgroundColor: Appcolor.mainColor,
                     title: 'Register',
-                    styleTitle: AppStyle.headlineStyle4.copyWith(color: Appcolor.whiteColor),
+                    styleTitle: AppStyle.headlineStyle4
+                        .copyWith(color: Appcolor.whiteColor),
                   ))
             ],
           ),

@@ -41,7 +41,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   verticalPadding: 15,
                   backgroundColor: Appcolor.backgroundcolor,
                   title: "VoiceSens Sample Web Application",
-                  micIcon: null,
+           
                   styleTitle: AppStyle.headlineStyle2,
                   setBoder: false),
               Container(
@@ -58,7 +58,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         verticalPadding: 15,
                         backgroundColor: Appcolor.backgroundcolor,
                         title: "User Signin",
-                        micIcon: null,
+            
                         styleTitle: AppStyle.headlineStyle3,
                         setBoder: true),
                     customTextForm(context,
@@ -87,7 +87,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 onTap: () {},
                 child: textBox(context,
                     verticalPadding: 10,
-                    micIcon: null,
+           
                     backgroundColor: Appcolor.mainColor,
                     title: "Next",
                     styleTitle: AppStyle.headlineStyle4

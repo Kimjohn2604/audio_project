@@ -1,4 +1,4 @@
-import 'package:app/component/colors.dart';
+/* import 'package:app/component/colors.dart';
 import 'package:app/component/style.dart';
 import 'package:app/widget/box.dart';
 import 'package:flutter/material.dart';
@@ -80,3 +80,4 @@ class VoiceEnrollMent extends StatelessWidget {
     );
   }
 }
+ */
