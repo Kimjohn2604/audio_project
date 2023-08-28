@@ -3,8 +3,8 @@ import 'package:app/component/style.dart';
 import 'package:app/widget/box.dart';
 import 'package:flutter/material.dart';
 
-class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
+class UserScreen extends StatelessWidget {
+  const UserScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,20 +57,6 @@ class SignUpScreen extends StatelessWidget {
                     customTextForm(context,
                         labelText: 'Enter your Username',
                         icon: Icons.person, validator: (String? value) {
-                      return value!.contains('@')
-                          ? 'Do not use the @ char.'
-                          : null;
-                    }, onChanged: () {}),
-                    customTextForm(context,
-                        labelText: 'Enter your Password',
-                        icon: Icons.lock, validator: (String? value) {
-                      return value!.contains('@')
-                          ? 'Do not use the @ char.'
-                          : null;
-                    }, onChanged: () {}),
-                    customTextForm(context,
-                        labelText: 'Re-Enter your Password',
-                        icon: Icons.lock, validator: (String? value) {
                       return value!.contains('@')
                           ? 'Do not use the @ char.'
                           : null;

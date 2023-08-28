@@ -19,11 +19,34 @@ Widget textBox(BuildContext context,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(micIcon, size: 20,),
-        const SizedBox(width: 10,),
+        Icon(
+          micIcon,
+          size: 20,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
         Text(title, style: styleTitle),
       ],
     ),
+  );
+}
+
+Widget navigationButton(
+  BuildContext context, {
+  required Color backgroundColor,
+  required String title,
+  required TextStyle styleTitle,
+}) {
+  return Container(
+    width: 165.5,
+    alignment: Alignment.center,
+    decoration: BoxDecoration(
+      color: backgroundColor,
+      borderRadius: BorderRadius.circular(8),
+    ),
+    padding: const EdgeInsets.symmetric(vertical: 10),
+    child: Text(title, style: styleTitle),
   );
 }
 
@@ -32,6 +55,7 @@ Widget customTextForm(BuildContext context,
     required IconData icon,
     required Function(String?)? validator,
     required Function onChanged}) {
+  String? textValue;
   return Container(
     margin: const EdgeInsets.only(top: 20),
     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -39,7 +63,9 @@ Widget customTextForm(BuildContext context,
         borderRadius: BorderRadius.circular(5), border: Border.all(width: 0.1)),
     child: TextFormField(
         cursorHeight: 20,
-        onChanged: onChanged(),
+        onChanged: (value) {
+          textValue = value;
+        },
         autovalidateMode: AutovalidateMode.always,
         decoration: InputDecoration(
           icon: Icon(icon),
@@ -50,7 +76,9 @@ Widget customTextForm(BuildContext context,
           focusedBorder: InputBorder.none,
         ),
         onSaved: null,
-        validator: validator!("")),
+        validator: (String? value) {
+          return value!.contains('@') ? 'Do not use the @ char.' : null;
+        }),
   );
 }
 
@@ -117,15 +145,15 @@ Widget warningBox(BuildContext context, {required bool showDetail}) {
                     ? Column(
                         children: [
                           const SizedBox(height: 10),
-                          detailedContent(
+                          /* detailedContent(context,
                               text:
                                   "The word you have spoken aren't entirely correct"),
-                          detailedContent(
+                          detailedContent(context,
                               text:
                                   "The word you have spoken aren't entirely correct"),
-                          detailedContent(
+                          detailedContent(context,
                               text:
-                                  "The word you have spoken aren't entirely correct"),
+                                  "The word you have spoken aren't entirely correct"), */
                         ],
                       )
                     : Container(),
@@ -143,18 +171,24 @@ Widget warningBox(BuildContext context, {required bool showDetail}) {
   );
 }
 
-Widget detailedContent({required String text}) {
-  return Row(
-    children: [
-      Container(
-        margin: const EdgeInsets.only(right: 10),
-        width: 5,
-        height: 5,
-        decoration:
-            const BoxDecoration(shape: BoxShape.circle, color: Appcolor.red),
-      ),
-      Text(text,
-          style: AppStyle.headlineStyle4.copyWith(color: Appcolor.iconColor2))
-    ],
+Widget detailedContent(BuildContext context,{required String text}) {
+  return Container(color: Appcolor.yellowColor,
+    child: Row(crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(right: 10,top: 10),
+          width: 5,
+          height: 5,
+          decoration: const BoxDecoration(
+              shape: BoxShape.circle, color: Appcolor.mainBlackColor),
+        ),
+        SizedBox(width: MediaQuery.of(context).size.width*0.82,
+          child: Text(text,
+              maxLines: 5,
+              style:
+                  AppStyle.headlineStyle3.copyWith(color: Appcolor.mainBlackColor)),
+        )
+      ],
+    ),
   );
 }

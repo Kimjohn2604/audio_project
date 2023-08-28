@@ -11,6 +11,8 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  String textEmail = "";
+  String textPass = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,14 +67,16 @@ class _SignInScreenState extends State<SignInScreen> {
                       return value!.contains('@')
                           ? 'Do not use the @ char.'
                           : null;
-                    }, onChanged: () {}),
+                    }, onChanged: (value) {
+                      textEmail = value;
+                    }),
                     customTextForm(context,
                         labelText: 'Enter your Password',
                         icon: Icons.lock, validator: (String? value) {
-                      return value!.contains('@')
+                      return value!.contains('x')
                           ? 'Do not use the @ char.'
                           : null;
-                    }, onChanged: () {}),
+                    }, onChanged: (value) {}),
                   ],
                 ),
               ),
@@ -80,9 +84,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 height: 30,
               ),
               GestureDetector(
-                onTap: () {
-                 
-                },
+                onTap: () {},
                 child: textBox(context,
                     verticalPadding: 10,
                     micIcon: null,

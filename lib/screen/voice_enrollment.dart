@@ -13,23 +13,11 @@ class VoiceEnrollMent extends StatelessWidget {
       body: Center(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          height: MediaQuery.of(context).size.height * 0.8,
+          height: MediaQuery.of(context).size.height * 0.7,
           width: double.infinity,
           color: Appcolor.backgroundcolor,
           child: Column(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    image: const DecorationImage(
-                      fit: BoxFit.fitWidth,
-                      image: AssetImage(
-                        "assets/items/tma.jpg",
-                      ),
-                    )),
-                height: 50,
-                width: 100,
-              ),
               textBox(context,
                   verticalPadding: 15,
                   micIcon: null,

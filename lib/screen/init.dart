@@ -13,7 +13,7 @@ class InitialScreen extends StatelessWidget {
       body: Center(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          height: MediaQuery.of(context).size.height * 0.4,
+          height: MediaQuery.of(context).size.height * 0.5,
           width: double.infinity,
           color: Appcolor.backgroundcolor,
           child: Column(
@@ -27,9 +27,10 @@ class InitialScreen extends StatelessWidget {
                         "assets/items/tma.jpg",
                       ),
                     )),
-                height: 50,
-                width: 100,
+                height: 147,
+                width: 302,
               ),
+              const SizedBox(height: 100,),
               textBox(context,
                   verticalPadding: 20,
                   backgroundColor: Appcolor.backgroundcolor,
@@ -38,34 +39,28 @@ class InitialScreen extends StatelessWidget {
                   styleTitle: AppStyle.headlineStyle2,
                   setBoder: false),
               GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, "register");
-                },
-                child: textBox(context,
-                    verticalPadding: 10,
+                  onTap: () {
+                    Navigator.pushNamed(context, "signin");
+                  },
+                  child: navigationButton(
+                    context,
                     backgroundColor: Appcolor.mainColor,
-                    micIcon: null,
-                    title: "Enroll a new user",
-                    styleTitle: AppStyle.headlineStyle4
-                        .copyWith(color: Appcolor.whiteColor),
-                    setBoder: false),
-              ),
+                    title: 'Login',
+                    styleTitle: AppStyle.headlineStyle4.copyWith(color: Appcolor.whiteColor),
+                  )),
               const SizedBox(
                 height: 15,
               ),
               GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, "signin");
-                },
-                child: textBox(context,
-                    verticalPadding: 10,
+                  onTap: () {
+                    Navigator.pushNamed(context, "register");
+                  },
+                  child: navigationButton(
+                    context,
                     backgroundColor: Appcolor.mainColor,
-                    micIcon: null,
-                    title: "Authentication an Existing User",
-                    styleTitle: AppStyle.headlineStyle4
-                        .copyWith(color: Appcolor.whiteColor),
-                    setBoder: false),
-              )
+                    title: 'Register',
+                    styleTitle: AppStyle.headlineStyle4.copyWith(color: Appcolor.whiteColor),
+                  ))
             ],
           ),
         ),
