@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:app/route/name.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:path/path.dart' as path;
 import 'package:app/component/colors.dart';
 import 'package:app/component/style.dart';
@@ -102,6 +103,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void _startRecordingTimer() {
     _recordingTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_elapsedSeconds >= 5) {
+        _stopRecording();
+        Navigator.of(context).pushNamed(Approutes.VALIDATION);
+      }
       setState(() {
         _elapsedSeconds += 1;
       });
@@ -182,8 +187,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
               _stopRecording();
               Navigator.of(context).pushNamed(Approutes.VALIDATION);
             },
-            child: SvgPicture.asset(
-              "assets/items/ic_mic.svg",
+            child: AvatarGlow(
+              glowColor: Colors.blue,
+              endRadius: 90.0,
+              duration: const Duration(milliseconds: 2000),
+              repeat: true,
+              showTwoGlows: true,
+              animate: _isLongPressing,
+              repeatPauseDuration: const Duration(milliseconds: 100),
+              child: Material(
+                // Replace this child with your own
+                elevation: 8.0,
+                shape: const CircleBorder(),
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey[100],
+                  radius: 40.0,
+                   child: SvgPicture.asset(
+                    'assets/items/ic_mic.svg',
+                    height: 60,
+                  ),
+                ),
+              ),
             ),
           ),
           Text(

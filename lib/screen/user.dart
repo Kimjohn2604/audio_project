@@ -2,15 +2,19 @@ import 'package:app/component/colors.dart';
 import 'package:app/component/style.dart';
 import 'package:app/route/name.dart';
 import 'package:app/widget/box.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class UserScreen extends StatelessWidget {
+class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    String textvalue = "";
-    String? errorText(String? value) {
+  State<UserScreen> createState() => _UserScreenState();
+}
+
+class _UserScreenState extends State<UserScreen> {
+  String textValue = "";
+   String? errorText(String? value) {
       if (value!.isEmpty) {
         return "you must fill your name";
       } else if (value.contains('@')) {
@@ -20,13 +24,23 @@ class UserScreen extends StatelessWidget {
     }
 
     void checkText(BuildContext context) {
-      if (errorText(textvalue)!.isNotEmpty) {
-        print(textvalue);
+      if (kDebugMode) {
+        print(errorText(textValue));
+      }
+
+      if (errorText(textValue) != null) {
+        if (kDebugMode) {
+          print(textValue);
+        }
         return;
       }
+
       Navigator.of(context).pushNamed(Approutes.REGISTER);
     }
 
+  @override
+  Widget build(BuildContext context) {
+   
     return Scaffold(
       /* backgroundColor: Appcolor.backgroundcolor, */
       body: Center(
@@ -63,7 +77,7 @@ class UserScreen extends StatelessWidget {
                         labelText: 'Enter your Username',
                         icon: Icons.person,
                         validator: errorText, onChanged: (value) {
-                        textvalue = value;
+                      textValue = value;
                     }),
                   ],
                 ),

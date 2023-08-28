@@ -46,7 +46,6 @@ Widget customTextForm(BuildContext context,
     required IconData icon,
     required String? Function(String?)? validator,
     required void Function(String)? onChanged}) {
-  String? textValue;
   return Container(
     margin: const EdgeInsets.only(top: 20),
     padding: const EdgeInsets.symmetric(horizontal: 10),
