@@ -2,6 +2,7 @@ import 'package:app/component/colors.dart';
 import 'package:app/component/style.dart';
 import 'package:app/widget/box.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -34,18 +35,12 @@ class RegisterScreen extends StatelessWidget {
                     detailedContent(context,
                         text:
                             "Sentence 1 (i.e: Hanoi is the capital of Vietnam)"),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    detailedContent(context,
+                    /* detailedContent(context,
                         text:
                             "Sentence 2 (i.e: Team, our manager came to the office this morning and will have a meeting our team this afternoon)"),
-                    SizedBox(
-                      height: 20,
-                    ),
                     detailedContent(context,
                         text:
-                            "Sentence 3 (i.e: Manager, the printer is broken, we need to purchase a new one.)"),
+                            "Sentence 3 (i.e: Manager, the printer is broken, we need to purchase a new one.)"), */
                   ],
                 ),
               ),
@@ -56,20 +51,14 @@ class RegisterScreen extends StatelessWidget {
       bottomNavigationBar: Container(
         height: MediaQuery.of(context).size.height * 0.25,
         color: Appcolor.iconColor1,
-        child: Column(mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-          Container(
-            height: 77,
-            width: 77,
-            color: Appcolor.red,
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          SvgPicture.asset(
+            "assets/items/ic_mic.svg",
           ),
-          const SizedBox(height: 20,),
-          navigationButton(
-            context,
-            backgroundColor: Appcolor.mainColor,
-            title: 'Register',
-            styleTitle: AppStyle.headlineStyle3,
-          )
+          const SizedBox(
+            height: 20,
+          ),
+      
         ]),
       ),
     );

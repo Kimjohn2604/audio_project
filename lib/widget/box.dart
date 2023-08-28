@@ -171,22 +171,25 @@ Widget warningBox(BuildContext context, {required bool showDetail}) {
   );
 }
 
-Widget detailedContent(BuildContext context,{required String text}) {
-  return Container(color: Appcolor.yellowColor,
-    child: Row(crossAxisAlignment: CrossAxisAlignment.start,
+Widget detailedContent(BuildContext context, {required String text}) {
+  return Container(
+    padding: const EdgeInsets.all(8),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          margin: const EdgeInsets.only(right: 10,top: 10),
+          margin: const EdgeInsets.only(right: 10, top: 10),
           width: 5,
           height: 5,
           decoration: const BoxDecoration(
               shape: BoxShape.circle, color: Appcolor.mainBlackColor),
         ),
-        SizedBox(width: MediaQuery.of(context).size.width*0.82,
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.82,
           child: Text(text,
               maxLines: 5,
-              style:
-                  AppStyle.headlineStyle3.copyWith(color: Appcolor.mainBlackColor)),
+              style: AppStyle.headlineStyle2
+                  .copyWith(color: Appcolor.mainBlackColor,fontWeight: FontWeight.normal)),
         )
       ],
     ),

@@ -53,7 +53,7 @@ class InitialScreen extends StatelessWidget {
               ),
               GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, "register");
+                    Navigator.pushNamed(context, "user");
                   },
                   child: navigationButton(
                     context,

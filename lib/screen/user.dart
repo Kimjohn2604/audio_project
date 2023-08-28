@@ -69,8 +69,7 @@ class UserScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, "voice_enrollment");
-                  print("something");
+                  Navigator.pushNamed(context, "register");
                 },
                 child: textBox(context,
                     verticalPadding: 10,
