@@ -9,6 +9,7 @@ class InitialScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       /* backgroundColor: Appcolor.backgroundcolor, */
       body: Center(
         child: Container(

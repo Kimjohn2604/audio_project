@@ -42,6 +42,7 @@ class _UserScreenState extends State<UserScreen> {
   Widget build(BuildContext context) {
    
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       /* backgroundColor: Appcolor.backgroundcolor, */
       body: Center(
         child: Container(
