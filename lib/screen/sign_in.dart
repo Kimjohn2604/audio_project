@@ -63,7 +63,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         setBoder: true),
                     customTextForm(context,
                         labelText: 'Enter your Username',
-                        icon: Icons.person, validator: (String? value) {
+                         validator: (String? value) {
                       return value!.contains('@')
                           ? 'Do not use the @ char.'
                           : null;
@@ -72,7 +72,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     }),
                     customTextForm(context,
                         labelText: 'Enter your Password',
-                        icon: Icons.lock, validator: (String? value) {
+                     validator: (String? value) {
                       return value!.contains('x')
                           ? 'Do not use the @ char.'
                           : null;

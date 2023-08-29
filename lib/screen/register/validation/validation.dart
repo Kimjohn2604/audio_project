@@ -1,6 +1,6 @@
-import 'package:app/component/colors.dart';
 import 'package:app/component/style.dart';
 import 'package:app/route/name.dart';
+import 'package:app/screen/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -12,20 +12,19 @@ class ValidationScreen extends StatefulWidget {
 }
 
 class _ValidationScreenState extends State<ValidationScreen> {
-  bool _callApi() {
-    return true;
-  }
+  final _callApi = ApiSimulator();
 
   @override
   void initState() {
     // call api from backend
     super.initState();
-    bool passed = _callApi();
-    if (passed) {
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        Navigator.of(context).pushNamed(Approutes.USER);
-      });
-    }
+    Future<bool> passed = _callApi.simulateApiCall();
+
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await passed
+          ? Navigator.of(context).pushNamedAndRemoveUntil(Approutes.SUCCESS, (route) => false)
+          : Navigator.of(context).pushNamedAndRemoveUntil(Approutes.FAILURE, (route) => false);
+    });
   }
 
   @override
@@ -35,11 +34,10 @@ class _ValidationScreenState extends State<ValidationScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
+            const SizedBox(
               height: 75,
               width: 75,
-              child: const CircularProgressIndicator(),
-              /* child: const CircularProgressIndicator(), */
+              child: CircularProgressIndicator(),
             ),
             const SizedBox(height: 20),
             Text(

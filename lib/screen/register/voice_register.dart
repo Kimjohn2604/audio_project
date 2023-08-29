@@ -18,10 +18,8 @@ class RegisterScreen extends StatefulWidget {
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
-
 late FlutterSoundRecorder _audioRecorder;
 
-bool _isLongPressing = false;
 bool _isRecordingLongPress = false;
 bool _isRecording = false;
 
@@ -36,9 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void initState() {
     super.initState();
     _audioRecorder = FlutterSoundRecorder();
-    _audioRecorder.openRecorder().then((value) {
-      print("Audio session opened: $value");
-    });
+    _audioRecorder.openRecorder();
   }
 
   Future<void> _checkPermissionAndStartRecording() async {
@@ -53,19 +49,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     /* / Directory appDir = await getApplicationDocumentsDirectory(); / */
     String folderPath = "/sdcard/Download/";
     final random = Random();
-    final fileName = 'audio_${random.nextInt(10000)}.$extension';
+    final fileName = "audio_${random.nextInt(10000)}.$extension";
     return path.join(folderPath, fileName);
   }
-
-  /*  String getExtension(Codec codec) {
-    String extension = "aac";
-    if (codec == Codec.aacADTS) extension = "aac";
-    if (codec == Codec.aacMP4) extension = "aac";
-    if (codec == Codec.amrNB) extension = "amr";
-    if (codec == Codec.amrWB) extension = "amr";
-    if (codec == Codec.pcm16WAV) extension = "wav";
-    return extension;
-  } */
 
   Future<void> _startRecording() async {
     if (!_isRecording) {
@@ -73,14 +59,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _recordedFilePath = await _getRecordedFilePath(
           "wav"); //Hàm _getRecordedFilePath() trả về đường dẫn tới tệp ghi âm
       await _audioRecorder.startRecorder(
-          toFile: _recordedFilePath,
-          /* codec: Codec.values.where((element) => element == codec).first, */
-          codec: Codec.pcm16WAV);
+        toFile: _recordedFilePath,
+        codec: Codec.pcm16WAV,
+        sampleRate: 16000,
+        numChannels: 1,
+        bitRate: 16000,
+      );
       setState(() {
         _isRecording = true;
+        _isRecordingLongPress = true;
       });
       _startRecordingTimer();
-      print(_isRecording);
     }
   }
 
@@ -103,9 +92,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void _startRecordingTimer() {
     _recordingTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_elapsedSeconds >= 5) {
+      if (_elapsedSeconds >= 30) {
         _stopRecording();
-        Navigator.of(context).pushNamed(Approutes.VALIDATION);
       }
       setState(() {
         _elapsedSeconds += 1;
@@ -118,6 +106,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     setState(() {
       _elapsedSeconds = 0;
     });
+    Navigator.of(context).pushNamedAndRemoveUntil(Approutes.VALIDATION, (route) => false);
   }
 
   @override
@@ -142,7 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 "Could you please press “Record” button and speak following sentense:",
                 style: AppStyle.headlineStyle2
                     .copyWith(color: Appcolor.mainBlackColor),
-                maxLines: 2,
+                maxLines: 3,
               ),
               Container(
                 height: 300,
@@ -155,10 +144,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     detailedContent(context,
                         text:
                             "Sentence 1 (i.e: Hanoi is the capital of Vietnam)"),
-                    /* detailedContent(context,
+                    detailedContent(context,
                         text:
                             "Sentence 2 (i.e: Team, our manager came to the office this morning and will have a meeting our team this afternoon)"),
-                    detailedContent(context,
+                    /* detailedContent(context,
                         text:
                             "Sentence 3 (i.e: Manager, the printer is broken, we need to purchase a new one.)"), */
                   ],
@@ -173,40 +162,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           GestureDetector(
             onLongPress: () {
-              setState(() {
-                _isLongPressing = true;
-                _isRecordingLongPress = true;
-              });
               _checkPermissionAndStartRecording();
             },
             onLongPressUp: () {
-              setState(() {
-                _isLongPressing = false;
-                _isRecordingLongPress = false;
-              });
               _stopRecording();
-              Navigator.of(context).pushNamed(Approutes.VALIDATION);
             },
             child: AvatarGlow(
-              glowColor: Colors.blue,
+              glowColor: Appcolor.mainColor,
               endRadius: 90.0,
-              duration: const Duration(milliseconds: 2000),
+              duration: const Duration(milliseconds: 500),
               repeat: true,
               showTwoGlows: true,
-              animate: _isLongPressing,
+              animate: _isRecordingLongPress,
               repeatPauseDuration: const Duration(milliseconds: 100),
-              child: Material(
-                // Replace this child with your own
-                elevation: 8.0,
-                shape: const CircleBorder(),
-                child: CircleAvatar(
-                  backgroundColor: Colors.grey[100],
-                  radius: 40.0,
-                   child: SvgPicture.asset(
-                    'assets/items/ic_mic.svg',
-                    height: 60,
-                  ),
-                ),
+              child: SvgPicture.asset(
+                'assets/items/ic_mic.svg',
+                height: 77,
               ),
             ),
           ),

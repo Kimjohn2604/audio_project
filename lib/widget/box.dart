@@ -30,7 +30,7 @@ Widget navigationButton(
   required TextStyle styleTitle,
 }) {
   return Container(
-    width: 165.5,
+    width: 213,
     alignment: Alignment.center,
     decoration: BoxDecoration(
       color: backgroundColor,
@@ -43,20 +43,18 @@ Widget navigationButton(
 
 Widget customTextForm(BuildContext context,
     {required String labelText,
-    required IconData icon,
     required String? Function(String?)? validator,
     required void Function(String)? onChanged}) {
   return Container(
     margin: const EdgeInsets.only(top: 20),
-    padding: const EdgeInsets.symmetric(horizontal: 10),
+    padding: const EdgeInsets.symmetric(horizontal: 15),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5), border: Border.all(width: 0.1)),
     child: TextFormField(
-        cursorHeight: 20,
+        cursorHeight: 25,
         onChanged: onChanged,
         autovalidateMode: AutovalidateMode.always,
         decoration: InputDecoration(
-          icon: Icon(icon),
           labelStyle:
               AppStyle.headlineStyle4.copyWith(color: Appcolor.textColor),
           labelText: labelText,
@@ -128,9 +126,9 @@ Widget warningBox(BuildContext context, {required bool showDetail}) {
                     style: AppStyle.headlineStyle4
                         .copyWith(color: Appcolor.iconColor2)),
                 showDetail
-                    ? Column(
+                    ? const Column(
                         children: [
-                          const SizedBox(height: 10),
+                          SizedBox(height: 10),
                           /* detailedContent(context,
                               text:
                                   "The word you have spoken aren't entirely correct"),
@@ -171,7 +169,7 @@ Widget detailedContent(BuildContext context, {required String text}) {
               shape: BoxShape.circle, color: Appcolor.mainBlackColor),
         ),
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.7,
+          width: MediaQuery.of(context).size.width * 0.78,
           child: Text(text,
               maxLines: 5,
               style: AppStyle.headlineStyle2.copyWith(

@@ -2,7 +2,6 @@ import 'package:app/component/colors.dart';
 import 'package:app/component/style.dart';
 import 'package:app/route/name.dart';
 import 'package:app/widget/box.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class UserScreen extends StatefulWidget {
@@ -16,7 +15,7 @@ class _UserScreenState extends State<UserScreen> {
   String textValue = "";
    String? errorText(String? value) {
       if (value!.isEmpty) {
-        return "you must fill your name";
+        return "You must fill your name";
       } else if (value.contains('@')) {
         return 'Do not use the @ char.';
       }
@@ -24,17 +23,9 @@ class _UserScreenState extends State<UserScreen> {
     }
 
     void checkText(BuildContext context) {
-      if (kDebugMode) {
-        print(errorText(textValue));
-      }
-
       if (errorText(textValue) != null) {
-        if (kDebugMode) {
-          print(textValue);
-        }
         return;
       }
-
       Navigator.of(context).pushNamed(Approutes.REGISTER);
     }
 
@@ -76,7 +67,6 @@ class _UserScreenState extends State<UserScreen> {
                         setBoder: true),
                     customTextForm(context,
                         labelText: 'Enter your Username',
-                        icon: Icons.person,
                         validator: errorText, onChanged: (value) {
                       textValue = value;
                     }),
