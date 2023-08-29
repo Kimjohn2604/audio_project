@@ -1,8 +1,10 @@
+import 'package:app/component/storage_key.dart';
 import 'package:app/component/style.dart';
 import 'package:app/route/name.dart';
 import 'package:app/screen/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:localstorage/localstorage.dart';
 
 class ValidationScreen extends StatefulWidget {
   const ValidationScreen({super.key});
@@ -13,6 +15,7 @@ class ValidationScreen extends StatefulWidget {
 
 class _ValidationScreenState extends State<ValidationScreen> {
   final _callApi = ApiSimulator();
+  final LocalStorage storage = LocalStorage(StorageKey.sentence);
 
   @override
   void initState() {
@@ -21,9 +24,18 @@ class _ValidationScreenState extends State<ValidationScreen> {
     Future<bool> passed = _callApi.simulateApiCall();
 
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await passed
-          ? Navigator.of(context).pushNamedAndRemoveUntil(Approutes.SUCCESS, (route) => false)
-          : Navigator.of(context).pushNamedAndRemoveUntil(Approutes.FAILURE, (route) => false);
+      if (await passed) {
+        int currentNumber = storage.getItem(StorageKey.sentence);
+        if (currentNumber >= 3) {
+          storage.setItem(StorageKey.sentence, 1);
+          await Navigator.of(context)
+              .pushNamedAndRemoveUntil(Approutes.INITIAL, (route) => false);
+        }
+        storage.setItem(StorageKey.sentence, currentNumber + 1);
+        await  Navigator.of(context)
+              .pushNamedAndRemoveUntil(Approutes.SUCCESS, (route) => false);
+      }
+      await Navigator.of(context).pushNamedAndRemoveUntil(Approutes.FAILURE, (route) => false);
     });
   }
 

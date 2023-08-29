@@ -16,7 +16,7 @@ class UserScreen extends StatefulWidget {
 class _UserScreenState extends State<UserScreen> {
   String textValue = "";
   final LocalStorage storage = LocalStorage(StorageKey.username);
-
+  final LocalStorage storageSentence = LocalStorage(StorageKey.sentence);
   String? errorText(String? value) {
     if (value!.isEmpty) {
       return "You must fill your name";
@@ -29,6 +29,7 @@ class _UserScreenState extends State<UserScreen> {
 
   void checkText(BuildContext context) {
     if (formKey.currentState!.validate()) {
+      storageSentence.setItem(StorageKey.sentence, 1);
       Navigator.of(context).pushNamed(Approutes.REGISTER);
     }
   }
