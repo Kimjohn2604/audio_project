@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:app/component/storage_key.dart';
 import 'package:app/route/name.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:path/path.dart' as path;
 import 'package:app/component/colors.dart';
 import 'package:app/component/style.dart';
@@ -18,6 +20,7 @@ class RegisterScreen extends StatefulWidget {
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
+
 late FlutterSoundRecorder _audioRecorder;
 
 bool _isRecordingLongPress = false;
@@ -30,6 +33,9 @@ late Timer _recordingTimer;
 int _elapsedSeconds = 0;
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final LocalStorage storage = LocalStorage(StorageKey.username);
+  final LocalStorage storageSentence = LocalStorage(StorageKey.sentence);
+
   @override
   void initState() {
     super.initState();
@@ -106,7 +112,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
     setState(() {
       _elapsedSeconds = 0;
     });
-    Navigator.of(context).pushNamedAndRemoveUntil(Approutes.VALIDATION, (route) => false);
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(Approutes.VALIDATION, (route) => false);
+  }
+
+  String _loadSentence() {
+    String sentence = "Sentence 1 (i.e: Hanoi is the capital of Vietnam)";
+    int? number = storageSentence.getItem(StorageKey.sentence);
+
+    if(number == null){
+       storageSentence.setItem(StorageKey.sentence, 1);
+       return sentence;
+    }
+    
+    if (number == 2) {
+      sentence = "CAu 2";
+    }
+    if (number == 3) {
+      sentence = "CAu 3";
+    }
+    return sentence;
   }
 
   @override
@@ -120,9 +145,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         },
       ),
       body: Column(children: [
-        const SizedBox(
-          height: 20,
-        ),
+        Text(storage.getItem(StorageKey.username)),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
@@ -141,12 +164,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 padding: const EdgeInsets.only(left: 15, top: 10),
                 child: Column(
                   children: [
-                    detailedContent(context,
+                    detailedContent(context, text: _loadSentence()),
+                    /* detailedContent(context,
                         text:
-                            "Sentence 1 (i.e: Hanoi is the capital of Vietnam)"),
-                    detailedContent(context,
-                        text:
-                            "Sentence 2 (i.e: Team, our manager came to the office this morning and will have a meeting our team this afternoon)"),
+                            "Sentence 2 (i.e: Team, our manager came to the office this morning and will have a meeting our team this afternoon)"), */
                     /* detailedContent(context,
                         text:
                             "Sentence 3 (i.e: Manager, the printer is broken, we need to purchase a new one.)"), */

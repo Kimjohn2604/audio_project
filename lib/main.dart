@@ -36,7 +36,6 @@ class MyApp extends StatelessWidget {
         Approutes.VALIDATION: (context) => const ValidationScreen(),
         Approutes.SUCCESS: (context) => const ValidScreen(),
         Approutes.FAILURE:(context) => const InvalidScreen(),
-
         /* Approutes.VOICE_ENROLLMENT: (context) => const VoiceEnrollMent() */
       },
     );

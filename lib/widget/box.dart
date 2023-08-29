@@ -41,10 +41,10 @@ Widget navigationButton(
   );
 }
 
-Widget customTextForm(BuildContext context,
+Widget customTextForm(
     {required String labelText,
     required String? Function(String?)? validator,
-    required void Function(String)? onChanged}) {
+    }) {
   return Container(
     margin: const EdgeInsets.only(top: 20),
     padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -52,8 +52,6 @@ Widget customTextForm(BuildContext context,
         borderRadius: BorderRadius.circular(5), border: Border.all(width: 0.1)),
     child: TextFormField(
         cursorHeight: 25,
-        onChanged: onChanged,
-        autovalidateMode: AutovalidateMode.always,
         decoration: InputDecoration(
           labelStyle:
               AppStyle.headlineStyle4.copyWith(color: Appcolor.textColor),

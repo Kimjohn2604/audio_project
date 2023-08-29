@@ -61,22 +61,20 @@ class _SignInScreenState extends State<SignInScreen> {
             
                         styleTitle: AppStyle.headlineStyle3,
                         setBoder: true),
-                    customTextForm(context,
+                    customTextForm(
                         labelText: 'Enter your Username',
                          validator: (String? value) {
                       return value!.contains('@')
                           ? 'Do not use the @ char.'
                           : null;
-                    }, onChanged: (value) {
-                      textEmail = value;
-                    }),
-                    customTextForm(context,
+                    }, ),
+                    customTextForm(
                         labelText: 'Enter your Password',
                      validator: (String? value) {
                       return value!.contains('x')
                           ? 'Do not use the @ char.'
                           : null;
-                    }, onChanged: (value) {}),
+                    }, ),
                   ],
                 ),
               ),
