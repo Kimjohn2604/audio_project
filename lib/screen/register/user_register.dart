@@ -20,9 +20,11 @@ class _UserScreenState extends State<UserScreen> {
   String? errorText(String? value) {
     if (value!.isEmpty) {
       return "You must fill your name";
-    } else if (value.contains('@')) {
-      return 'Do not use the @ char.';
+    } else if (value
+        .contains(RegExp(r'[@,#,",",",.,:,$,%,^,,*,(,),-,_,+,=,!,/,<,>,;,]'))) {
+      return 'Do not use the speacial char.';
     }
+
     storage.setItem(StorageKey.username, value);
     return null;
   }
@@ -41,57 +43,54 @@ class _UserScreenState extends State<UserScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       /* backgroundColor: Appcolor.backgroundcolor, */
-      body: Center(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          height: MediaQuery.of(context).size.height * 0.5,
-          width: double.infinity,
-          color: Appcolor.backgroundcolor,
-          child: Form(
-            key: formKey,
-            child: Column(
-              children: [
-                textBox(context,
-                    verticalPadding: 15,
-                    backgroundColor: Appcolor.backgroundcolor,
-                    title: "VoiceSens Sample Web Application",
-                    styleTitle: AppStyle.headlineStyle2,
-                    setBoder: false),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Appcolor.whiteColor,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Column(
-                    children: [
-                      textBox(context,
-                          verticalPadding: 15,
-                          backgroundColor: Appcolor.backgroundcolor,
-                          title: "User Signin",
-                          styleTitle: AppStyle.headlineStyle3,
-                          setBoder: true),
-                      customTextForm(
-                          labelText: "Username", validator: errorText),
-                    ],
-                  ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        width: double.infinity,
+        color: Appcolor.backgroundcolor,
+        child: Form(
+          key: formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              textBox(context,
+                  verticalPadding: 15,
+                  backgroundColor: Appcolor.backgroundcolor,
+                  title: "VoiceSens Sample Web Application",
+                  styleTitle: AppStyle.headlineStyle2,
+                  setBoder: false),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Appcolor.whiteColor,
+                  borderRadius: BorderRadius.circular(5),
                 ),
-                const SizedBox(
-                  height: 30,
+                child: Column(
+                  children: [
+                    textBox(context,
+                        verticalPadding: 15,
+                        backgroundColor: Appcolor.backgroundcolor,
+                        title: "User Signin",
+                        styleTitle: AppStyle.headlineStyle3,
+                        setBoder: true),
+                    customTextForm(labelText: "Username", validator: errorText),
+                  ],
                 ),
-                GestureDetector(
-                    onTap: () {
-                      checkText(context);
-                    },
-                    child: navigationButton(context,
-                        backgroundColor: Appcolor.mainColor,
-                        title: "Next",
-                        styleTitle: AppStyle.headlineStyle4
-                            .copyWith(color: Appcolor.whiteColor)))
-              ],
-            ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              GestureDetector(
+                  onTap: () {
+                    checkText(context);
+                  },
+                  child: navigationButton(context,
+                      backgroundColor: Appcolor.mainColor,
+                      title: "Next",
+                      styleTitle: AppStyle.headlineStyle4
+                          .copyWith(color: Appcolor.whiteColor)))
+            ],
           ),
         ),
       ),

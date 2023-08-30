@@ -8,7 +8,7 @@ Widget textBox(BuildContext context,
     required TextStyle styleTitle,
     required bool setBoder,
     required double verticalPadding}) {
-  return Container(
+  return Container(width: MediaQuery.of(context).size.width,
     decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(5),
@@ -17,7 +17,7 @@ Widget textBox(BuildContext context,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(title, style: styleTitle),
+        Text(title,maxLines:3, style: styleTitle),
       ],
     ),
   );
@@ -49,7 +49,7 @@ Widget customTextForm(
     margin: const EdgeInsets.only(top: 20),
     padding: const EdgeInsets.symmetric(horizontal: 15),
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5), border: Border.all(width: 0.1)),
+        borderRadius: BorderRadius.circular(5), border: Border.all(width: 0.5)),
     child: TextFormField(
         cursorHeight: 25,
         decoration: InputDecoration(
@@ -63,96 +63,6 @@ Widget customTextForm(
         validator: validator),
   );
 }
-
-Widget authentiactionBox(BuildContext context,
-    {required String bigText, required String smallText, required themeColor}) {
-  return Container(
-    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-    decoration: BoxDecoration(
-        color: Appcolor.backgroundcolor,
-        border: Border.all(width: 1, color: themeColor),
-        borderRadius: BorderRadius.circular(5)),
-    height: 70,
-    width: double.infinity,
-    child: Row(
-      children: [
-        Container(
-          margin: const EdgeInsets.only(right: 20),
-          color: Appcolor.mainColor,
-          height: 40,
-          width: 40,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              bigText,
-              style: AppStyle.headlineStyle3.copyWith(color: themeColor),
-            ),
-            Text(
-              smallText,
-              style: AppStyle.headlineStyle4.copyWith(color: themeColor),
-            )
-          ],
-        )
-      ],
-    ),
-  );
-}
-
-Widget warningBox(BuildContext context, {required bool showDetail}) {
-  return Container(
-    decoration: BoxDecoration(
-      color: Appcolor.backgroundcolor,
-      border: Border.all(width: 1, color: Appcolor.iconColor2),
-    ),
-    padding: const EdgeInsets.only(left: 15, top: 15, right: 5, bottom: 15),
-    child: Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Your voice sample",
-                    style:
-                        AppStyle.headlineStyle3.copyWith(color: Appcolor.red)),
-                Text("This could be",
-                    style: AppStyle.headlineStyle4
-                        .copyWith(color: Appcolor.iconColor2)),
-                showDetail
-                    ? const Column(
-                        children: [
-                          SizedBox(height: 10),
-                          /* detailedContent(context,
-                              text:
-                                  "The word you have spoken aren't entirely correct"),
-                          detailedContent(context,
-                              text:
-                                  "The word you have spoken aren't entirely correct"),
-                          detailedContent(context,
-                              text:
-                                  "The word you have spoken aren't entirely correct"), */
-                        ],
-                      )
-                    : Container(),
-              ],
-            ),
-            const Icon(
-              Icons.close,
-              size: 18,
-              color: Appcolor.red,
-            )
-          ],
-        )
-      ],
-    ),
-  );
-}
-
 Widget detailedContent(BuildContext context, {required String text}) {
   return Container(
     padding: const EdgeInsets.all(8),

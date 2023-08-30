@@ -4,8 +4,8 @@ import 'package:app/route/name.dart';
 import 'package:app/widget/box.dart';
 import 'package:flutter/material.dart';
 
-class ValidScreen extends StatelessWidget {
-  const ValidScreen({super.key});
+class InvalidRegistration extends StatelessWidget {
+  const InvalidRegistration({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class ValidScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
                Text(
-                "Validation Successfully",
+                "Validation Failed",
                 style: AppStyle.headlineStyle2,
               ),
               const SizedBox(
@@ -30,7 +30,7 @@ class ValidScreen extends StatelessWidget {
                 },
                 child: navigationButton(context,
                     backgroundColor: Appcolor.mainColor,
-                    title: "Record next sentence",
+                    title: "Try again",
                     styleTitle: AppStyle.headlineStyle2
                         .copyWith(color: Appcolor.whiteColor)),
               ),

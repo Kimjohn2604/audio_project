@@ -1,14 +1,18 @@
 import 'package:app/component/colors.dart';
+import 'package:app/component/storage_key.dart';
 import 'package:app/component/style.dart';
 import 'package:app/route/name.dart';
 import 'package:app/widget/box.dart';
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 
-class InvalidScreen extends StatelessWidget {
-  const InvalidScreen({super.key});
+class ValidRegistration extends StatelessWidget {
+  ValidRegistration({super.key});
+  final LocalStorage storage = LocalStorage(StorageKey.sentence);
 
   @override
   Widget build(BuildContext context) {
+    int currentNumber = storage.getItem(StorageKey.sentence);
     return Scaffold(
       body: Center(
         child: SizedBox(
@@ -17,8 +21,8 @@ class InvalidScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-               Text(
-                "Validation Failed",
+              Text(
+                "Validation Successfully",
                 style: AppStyle.headlineStyle2,
               ),
               const SizedBox(
@@ -26,11 +30,16 @@ class InvalidScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(Approutes.REGISTER);
+                  if (currentNumber > 3) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        Approutes.INITIAL, (route) => false);
+                  } else {
+                    Navigator.of(context).pushNamed(Approutes.REGISTER);
+                  }
                 },
                 child: navigationButton(context,
                     backgroundColor: Appcolor.mainColor,
-                    title: "Try again",
+                    title: currentNumber > 3 ? "Back to Login":"Record next sentence",
                     styleTitle: AppStyle.headlineStyle2
                         .copyWith(color: Appcolor.whiteColor)),
               ),

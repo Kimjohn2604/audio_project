@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:localstorage/localstorage.dart';
 
-class ValidationScreen extends StatefulWidget {
-  const ValidationScreen({super.key});
+class RegisterValidation extends StatefulWidget {
+  const RegisterValidation({super.key});
 
   @override
-  State<ValidationScreen> createState() => _ValidationScreenState();
+  State<RegisterValidation> createState() => _RegisterValidationState();
 }
 
-class _ValidationScreenState extends State<ValidationScreen> {
+class _RegisterValidationState extends State<RegisterValidation> {
   final _callApi = ApiSimulator();
   final LocalStorage storage = LocalStorage(StorageKey.sentence);
 
@@ -26,16 +26,16 @@ class _ValidationScreenState extends State<ValidationScreen> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (await passed) {
         int currentNumber = storage.getItem(StorageKey.sentence);
-        if (currentNumber >= 3) {
+        /* if (currentNumber > 3) {
           storage.setItem(StorageKey.sentence, 1);
           await Navigator.of(context)
               .pushNamedAndRemoveUntil(Approutes.INITIAL, (route) => false);
-        }
+        } */
         storage.setItem(StorageKey.sentence, currentNumber + 1);
         await  Navigator.of(context)
-              .pushNamedAndRemoveUntil(Approutes.SUCCESS, (route) => false);
+              .pushNamedAndRemoveUntil(Approutes.SUCCESS_REGISTRATION, (route) => false);
       }
-      await Navigator.of(context).pushNamedAndRemoveUntil(Approutes.FAILURE, (route) => false);
+      await Navigator.of(context).pushNamedAndRemoveUntil(Approutes.FAILURE_REGISTRATION, (route) => false);
     });
   }
 
