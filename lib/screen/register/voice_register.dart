@@ -61,7 +61,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Future<void> _startRecording() async {
     if (!_isRecording) {
-      //kiểm tra xem liệu ứng dụng có đang trong trạng thái ghi âm
       _recordedFilePath = await _getRecordedFilePath(
           "wav"); //Hàm _getRecordedFilePath() trả về đường dẫn tới tệp ghi âm
       await _audioRecorder.startRecorder(

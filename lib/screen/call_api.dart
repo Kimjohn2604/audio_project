@@ -6,6 +6,6 @@ class ApiSimulator {
     await Future.delayed(const Duration(seconds: 2));
 
     // Trả về kết quả true hoặc false dựa trên một điều kiện tùy ý
-    return false;
+    return true;
   }
 }

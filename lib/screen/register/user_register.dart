@@ -2,6 +2,7 @@ import 'package:app/component/colors.dart';
 import 'package:app/component/storage_key.dart';
 import 'package:app/component/style.dart';
 import 'package:app/route/name.dart';
+import 'package:app/widget/appar.dart';
 import 'package:app/widget/box.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
@@ -42,7 +43,6 @@ class _UserScreenState extends State<UserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      /* backgroundColor: Appcolor.backgroundcolor, */
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         width: double.infinity,

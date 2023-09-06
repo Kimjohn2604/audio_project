@@ -70,7 +70,6 @@ class _SignInScreenState extends State<SignInScreen> {
         _isRecordingLongPress = true;
       });
       _startRecordingTimer();
-      print(_recordedFilePath);
     }
   }
 
@@ -102,7 +101,7 @@ class _SignInScreenState extends State<SignInScreen> {
       _elapsedSeconds = 0;
     });
     Navigator.of(context)
-        .pushNamedAndRemoveUntil(Approutes.SUCCESS_SIGNIN, (route) => false);
+        .pushNamedAndRemoveUntil(Approutes.SIGNIN_VALIDATION, (route) => false);
   }
 
   @override
@@ -142,20 +141,20 @@ class _SignInScreenState extends State<SignInScreen> {
           const SizedBox(
             height: 20,
           ),
-          Column(
-            children: [
-              Text(
-                "Listening",
-                style: AppStyle.headlineStyle1,
-              ),
-              _isRecordingLongPress
-                  ? LoadingAnimationWidget.staggeredDotsWave(
+          _isRecordingLongPress
+              ? Column(
+                  children: [
+                    Text(
+                      "Listening",
+                      style: AppStyle.headlineStyle1,
+                    ),
+                    LoadingAnimationWidget.staggeredDotsWave(
                       color: Appcolor.mainBlackColor,
                       size: 50,
                     )
-                  : Container()
-            ],
-          )
+                  ],
+                )
+              : Container()
         ],
       ),
       bottomNavigationBar: SizedBox(

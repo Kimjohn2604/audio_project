@@ -21,8 +21,7 @@ class _SigninValidationState extends State<SigninValidation> {
 
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (await passed) {
-        await Navigator.of(context).pushNamedAndRemoveUntil(
-            Approutes.SUCCESS_SIGNIN, (route) => false);
+        await Navigator.of(context).pushNamed(Approutes.SUCCESS_SIGNIN);
       } else {}
     });
   }
