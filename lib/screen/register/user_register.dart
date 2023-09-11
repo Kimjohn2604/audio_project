@@ -2,7 +2,7 @@ import 'package:app/component/colors.dart';
 import 'package:app/component/storage_key.dart';
 import 'package:app/component/style.dart';
 import 'package:app/route/name.dart';
-import 'package:app/widget/appar.dart';
+import 'package:app/screen/call_api.dart';
 import 'package:app/widget/box.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
@@ -14,9 +14,11 @@ class UserScreen extends StatefulWidget {
   State<UserScreen> createState() => _UserScreenState();
 }
 
+final _callApi = ApiSimulator();
+
 class _UserScreenState extends State<UserScreen> {
   String textValue = "";
-  final LocalStorage storage = LocalStorage(StorageKey.username);
+  final LocalStorage storageUsername = LocalStorage(StorageKey.username);
   final LocalStorage storageSentence = LocalStorage(StorageKey.sentence);
   String? errorText(String? value) {
     if (value!.isEmpty) {
@@ -26,16 +28,23 @@ class _UserScreenState extends State<UserScreen> {
       return 'Do not use the speacial char.';
     }
 
-    storage.setItem(StorageKey.username, value);
+    storageUsername.setItem(StorageKey.username, value);
     return null;
-  }
+  } //Check for null and special characters of input string (textValue) and save to username Key
 
-  void checkText(BuildContext context) {
+  Future<void> checkText(BuildContext context) async {
     if (formKey.currentState!.validate()) {
-      storageSentence.setItem(StorageKey.sentence, 1);
-      Navigator.of(context).pushNamed(Approutes.REGISTER);
+      final result = await _callApi
+          .simulateApiCall(storageUsername.getItem(StorageKey.username));
+      if (result) {
+        Navigator.of(context).pushNamed(Approutes.REGISTER);
+        storageSentence.setItem(StorageKey.sentence, 1);
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("User already exists")));
+      }
     }
-  }
+  } //Check if the current state of the Form is valid and save to sentence Key
 
   final formKey = GlobalKey<FormState>();
 
@@ -71,7 +80,7 @@ class _UserScreenState extends State<UserScreen> {
                     textBox(context,
                         verticalPadding: 15,
                         backgroundColor: Appcolor.backgroundcolor,
-                        title: "User Signin",
+                        title: "User Signup",
                         styleTitle: AppStyle.headlineStyle3,
                         setBoder: true),
                     customTextForm(labelText: "Username", validator: errorText),

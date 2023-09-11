@@ -31,7 +31,7 @@ Codec codec = Codec.defaultCodec;
 
 late Timer _recordingTimer;
 int _elapsedSeconds = 0;
-final LocalStorage storage = LocalStorage(StorageKey.username);
+
 final LocalStorage storageSentence = LocalStorage(StorageKey.sentence);
 
 class _SignInScreenState extends State<SignInScreen> {

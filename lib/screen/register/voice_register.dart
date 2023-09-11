@@ -33,7 +33,6 @@ late Timer _recordingTimer;
 int _elapsedSeconds = 0;
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final LocalStorage storage = LocalStorage(StorageKey.username);
   final LocalStorage storageSentence = LocalStorage(StorageKey.sentence);
 
   @override
@@ -57,12 +56,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final random = Random();
     String fileName = "audio_${random.nextInt(10000)}.$extension";
     return path.join(folderPath, fileName);
-  }
+  }//Hàm _getRecordedFilePath() trả về đường dẫn tới tệp ghi âm
 
   Future<void> _startRecording() async {
     if (!_isRecording) {
       _recordedFilePath = await _getRecordedFilePath(
-          "wav"); //Hàm _getRecordedFilePath() trả về đường dẫn tới tệp ghi âm
+          "wav"); 
       await _audioRecorder.startRecorder(
         toFile: _recordedFilePath,
         codec: Codec.pcm16WAV,
@@ -129,7 +128,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "Sentence 3 (i.e: Manager, the printer is broken, we need to purchase a new one.)";
     }
     return sentence;
-  }
+  }//Return the corresponding sentences based on the internally stored key sentence, the key will take 3 values 1,2,3
+
 
   @override
   Widget build(BuildContext context) {

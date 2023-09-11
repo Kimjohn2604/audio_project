@@ -1,5 +1,6 @@
 import 'package:app/component/colors.dart';
 import 'package:app/component/style.dart';
+import 'package:app/route/name.dart';
 import 'package:app/widget/box.dart';
 import 'package:flutter/material.dart';
 
@@ -54,7 +55,7 @@ class InitialScreen extends StatelessWidget {
             ),
             GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, "user");
+                  Navigator.pushNamed(context, Approutes.USER);
                 },
                 child: navigationButton(
                   context,

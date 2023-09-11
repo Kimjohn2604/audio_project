@@ -6,14 +6,14 @@ import 'package:localstorage/localstorage.dart';
 class ValidLogin extends StatelessWidget {
    ValidLogin({super.key});
 
-  final LocalStorage storage = LocalStorage(StorageKey.username);
+  final LocalStorage storageUsername = LocalStorage(StorageKey.username);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
           child: Text(
-        "Well come: ${storage.getItem(StorageKey.username)}",
+        "Well come: ${storageUsername.getItem(StorageKey.username)}",
         style: AppStyle.headlineStyle2,
       )),
     );

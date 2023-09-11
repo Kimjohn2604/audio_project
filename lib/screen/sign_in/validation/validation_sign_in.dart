@@ -1,8 +1,10 @@
+import 'package:app/component/storage_key.dart';
 import 'package:app/component/style.dart';
 import 'package:app/route/name.dart';
 import 'package:app/screen/call_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:localstorage/localstorage.dart';
 
 class SigninValidation extends StatefulWidget {
   const SigninValidation({super.key});
@@ -13,17 +15,19 @@ class SigninValidation extends StatefulWidget {
 
 class _SigninValidationState extends State<SigninValidation> {
   final _callApi = ApiSimulator();
+  final LocalStorage storageUsername = LocalStorage(StorageKey.username);
   @override
   void initState() {
     // call api from backend
     super.initState();
-    Future<bool> passed = _callApi.simulateApiCall();
+    /* Future<bool> passed =
+        _callApi.simulateApiCall(storageUsername.getItem(StorageKey.username));
 
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (await passed) {
         await Navigator.of(context).pushNamed(Approutes.SUCCESS_SIGNIN);
       } else {}
-    });
+    }); */
   }
 
   @override

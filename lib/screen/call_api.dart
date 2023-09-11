@@ -1,11 +1,30 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class ApiSimulator {
-  Future<bool> simulateApiCall() async {
-    // Giả lập việc gọi API sau 2 giây
-    await Future.delayed(const Duration(seconds: 2));
+  Future<bool> simulateApiCall(String username) async {
+    // Tạo URL của API
+    final apiUrl = Uri.parse(
+        'http://10.250.194.245:8080/api/v1/enroll'); // Thay YOUR_API_URL_HERE bằng URL của API thật sự
 
-    // Trả về kết quả true hoặc false dựa trên một điều kiện tùy ý
-    return true;
+    final requestData = {
+      "username": username,
+    };
+
+    // Gửi yêu cầu API
+    final response = await http.post(
+      apiUrl,
+      body: jsonEncode(requestData),
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = jsonDecode(response.body);
+      return true;
+    } else {
+      Map<String, dynamic> data = jsonDecode(response.body);
+      print(data);
+      return false;
+    }
   }
 }

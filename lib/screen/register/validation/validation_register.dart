@@ -21,7 +21,7 @@ class _RegisterValidationState extends State<RegisterValidation> {
   void initState() {
     // call api from backend
     super.initState();
-    Future<bool> passed = _callApi.simulateApiCall();
+   /*  Future<bool> passed = _callApi.simulateApiCall(storage.getItem(StorageKey.username));
 
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (await passed) {
@@ -36,7 +36,7 @@ class _RegisterValidationState extends State<RegisterValidation> {
               .pushNamedAndRemoveUntil(Approutes.SUCCESS_REGISTRATION, (route) => false);
       }
       await Navigator.of(context).pushNamedAndRemoveUntil(Approutes.FAILURE_REGISTRATION, (route) => false);
-    });
+    }); */
   }
 
   @override
