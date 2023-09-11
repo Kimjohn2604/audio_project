@@ -1,9 +1,13 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 import 'package:app/component/storage_key.dart';
 import 'package:app/route/name.dart';
+import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:flutter/foundation.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:noise_meter/noise_meter.dart';
 import 'package:path/path.dart' as path;
 import 'package:app/component/colors.dart';
 import 'package:app/component/style.dart';
@@ -32,15 +36,27 @@ Codec codec = Codec.defaultCodec;
 late Timer _recordingTimer;
 int _elapsedSeconds = 0;
 
+NoiseReading? _latestReading;
+StreamSubscription<NoiseReading>? _noiseSubscription;
+NoiseMeter? _noiseMeter;
+
 class _RegisterScreenState extends State<RegisterScreen> {
   final LocalStorage storage = LocalStorage(StorageKey.username);
   final LocalStorage storageSentence = LocalStorage(StorageKey.sentence);
+  late final RecorderController recorderController;
 
   @override
   void initState() {
     super.initState();
     _audioRecorder = FlutterSoundRecorder();
     _audioRecorder.openRecorder();
+    _noiseMeter = NoiseMeter(onError);
+    recorderController = RecorderController();
+  }
+
+  void onError(Object error) {
+    print(error);
+    _isRecording = false;
   }
 
   Future<void> _checkPermissionAndStartRecording() async {
@@ -60,7 +76,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<void> _startRecording() async {
+    _noiseSubscription = _noiseMeter?.noise.listen(onData);
+
     if (!_isRecording) {
+      await recorderController.checkPermission();
+      recorderController.record(path: await _getRecordedFilePath("wav"));
       _recordedFilePath = await _getRecordedFilePath(
           "wav"); //Hàm _getRecordedFilePath() trả về đường dẫn tới tệp ghi âm
       await _audioRecorder.startRecorder(
@@ -75,7 +95,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
+  void onData(NoiseReading noiseReading) {
+    if (kDebugMode) {
+      print("alooo: " + noiseReading.toString());
+    }
+    setState(() {
+      _latestReading = noiseReading;
+      if (!_isRecording) _isRecording = true;
+    });
+  }
+
   Future<void> _stopRecording() async {
+    _noiseSubscription?.cancel();
     if (_isRecording) {
       await _audioRecorder.stopRecorder();
       setState(() {
@@ -131,6 +162,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return sentence;
   }
 
+  List<Widget> getContent() => <Widget>[
+        AudioWaveforms(
+            enableGesture: true,
+            size: Size(MediaQuery.of(context).size.width, 200.0),
+            recorderController: recorderController,
+            waveStyle: const WaveStyle(
+                extendWaveform: true,
+                showMiddleLine: false,
+                durationStyle: TextStyle(fontSize: 30)))
+      ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,8 +180,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         title: "Register",
         leadingIcon: Icons.chevron_left,
         leadingTap: () {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-              Approutes.USER, (route) => false);
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(Approutes.USER, (route) => false);
         },
       ),
       body: Container(
@@ -165,6 +207,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
             ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: getContent()),
+            )
           ],
         ),
       ),
@@ -194,7 +242,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
           Text(
             "00 : ${_elapsedSeconds.toString().padLeft(2, '0')}",
-            style: AppStyle.headlineStyle2.copyWith(color: Appcolor.backupColor),
+            style:
+                AppStyle.headlineStyle2.copyWith(color: Appcolor.backupColor),
           ),
         ]),
       ),

@@ -42,6 +42,9 @@ dependencies:
   avatar_glow: ^2.0.2
   localstorage: ^4.0.0+1
   loading_animation_widget: ^1.2.0+4
+  http: ^1.1.0
+  noise_meter: ^4.0.1
+  audio_waveforms: ^1.0.4
 
 dev_dependencies:
   flutter_test:
