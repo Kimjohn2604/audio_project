@@ -63,7 +63,7 @@ Widget customTextForm(
         validator: validator),
   );
 }
-Widget detailedContent(BuildContext context, {required Future<String> text}) {
+Widget detailedContent(BuildContext context, {required String text}) {
   return Container(
     padding: const EdgeInsets.all(8),
     child: Row(

@@ -43,6 +43,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.initState();
     _audioRecorder = FlutterSoundRecorder();
     _audioRecorder.openRecorder();
+    _loadSentence();
   }
 
   Future<void> _checkPermissionAndStartRecording() async {
@@ -113,9 +114,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         Approutes.REGISTER_VALIDATION, (route) => false);
   }
 
+  String sentence = "";
+
   Future<String> _loadSentence() async {
     final text = ApiSimulator();
-    String sentence = await text.voiceApiCall(0);
+    sentence = await text.voiceApiCall(0);
     int? number = storageSentence.getItem(StorageKey.sentence);
     if (number == null) {
       storageSentence.setItem(StorageKey.sentence, 1);
@@ -159,7 +162,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 padding: const EdgeInsets.only(left: 15, top: 10),
                 child: Column(
                   children: [
-                    detailedContent(context, text: _loadSentence()),
+                    detailedContent(context, text: sentence),
                   ],
                 ),
               ),
