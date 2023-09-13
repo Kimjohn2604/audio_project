@@ -116,21 +116,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   String sentence = "";
 
-  Future<String> _loadSentence() async {
+  void _loadSentence() async {
     final text = ApiSimulator();
-    sentence = await text.voiceApiCall(0);
+    String data = await text.voiceApiCall(0);
     int? number = storageSentence.getItem(StorageKey.sentence);
     if (number == null) {
       storageSentence.setItem(StorageKey.sentence, 1);
-      return sentence;
     }
     if (number == 2) {
-      sentence = await text.voiceApiCall(1);
+      // debug chỗ này xem bênn này k chạy đc
+      data = await text.voiceApiCall(1);
     }
     if (number == 3) {
-      sentence = await text.voiceApiCall(2);
+      data = await text.voiceApiCall(2);
     }
-    return sentence;
+    setState(() {
+      sentence = data;
+    });
   } //Return the corresponding sentences based on the internally stored key sentence, the key will take 3 values 1,2,3
 
   @override
