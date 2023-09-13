@@ -45,6 +45,7 @@ class ApiSimulator {
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
       String sentence = data["data"];
+      print("data: $sentence");
       return sentence;
     } else {
       throw Exception('Failed to call API');

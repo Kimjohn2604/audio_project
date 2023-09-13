@@ -24,7 +24,7 @@ class _RegisterValidationState extends State<RegisterValidation> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       String passed =await _callApi.voiceApiCall(0);
       if (passed.isNotEmpty) {
-        int currentNumber = storage.getItem(StorageKey.token);
+        int currentNumber = storage.getItem(StorageKey.sentence);
         storage.setItem(StorageKey.sentence, currentNumber + 1);
         await  Navigator.of(context)
               .pushNamedAndRemoveUntil(Approutes.SUCCESS_REGISTRATION, (route) => false);
