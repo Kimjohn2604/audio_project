@@ -21,16 +21,10 @@ class _RegisterValidationState extends State<RegisterValidation> {
   void initState() {
     // call api from backend
     super.initState();
-   Future<String> passed = _callApi.voiceApiCall(0);
-
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (await passed) {
+      String passed =await _callApi.voiceApiCall(0);
+      if (passed.isNotEmpty) {
         int currentNumber = storage.getItem(StorageKey.token);
-        /* if (currentNumber > 3) {
-          storage.setItem(StorageKey.sentence, 1);
-          await Navigator.of(context)
-              .pushNamedAndRemoveUntil(Approutes.INITIAL, (route) => false);
-        } */
         storage.setItem(StorageKey.sentence, currentNumber + 1);
         await  Navigator.of(context)
               .pushNamedAndRemoveUntil(Approutes.SUCCESS_REGISTRATION, (route) => false);

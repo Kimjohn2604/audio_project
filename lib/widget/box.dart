@@ -63,7 +63,7 @@ Widget customTextForm(
         validator: validator),
   );
 }
-Widget detailedContent(BuildContext context, {required String text}) {
+Widget detailedContent(BuildContext context, {required Future<String> text}) {
   return Container(
     padding: const EdgeInsets.all(8),
     child: Row(
@@ -78,7 +78,7 @@ Widget detailedContent(BuildContext context, {required String text}) {
         ),
         SizedBox(
           width: MediaQuery.of(context).size.width * 0.78,
-          child: Text(text,
+          child: Text(text.toString(),
               maxLines: 5,
               style: AppStyle.headlineStyle2.copyWith(
                   color: Appcolor.mainBlackColor,

@@ -59,12 +59,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final random = Random();
     String fileName = "audio_${random.nextInt(10000)}.$extension";
     return path.join(folderPath, fileName);
-  }//Hàm _getRecordedFilePath() trả về đường dẫn tới tệp ghi âm
+  } //Hàm _getRecordedFilePath() trả về đường dẫn tới tệp ghi âm
 
   Future<void> _startRecording() async {
     if (!_isRecording) {
-      _recordedFilePath = await _getRecordedFilePath(
-          "wav"); 
+      _recordedFilePath = await _getRecordedFilePath("wav");
       await _audioRecorder.startRecorder(
         toFile: _recordedFilePath,
         codec: Codec.pcm16WAV,
@@ -114,27 +113,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
         Approutes.REGISTER_VALIDATION, (route) => false);
   }
 
-  String _loadSentence() {
-    final text= ApiSimulator();
-
-    String sentence = "Sentence 1 (i.e: Hanoi is the capital of Vietnam)";
+  Future<String> _loadSentence() async {
+    final text = ApiSimulator();
+    String sentence = await text.voiceApiCall(0);
     int? number = storageSentence.getItem(StorageKey.sentence);
-
     if (number == null) {
       storageSentence.setItem(StorageKey.sentence, 1);
       return sentence;
     }
     if (number == 2) {
-      sentence =
-          "Sentence 2 (i.e: Team, our manager came to the office this morning and will have a meeting our team this afternoon)";
+      sentence = await text.voiceApiCall(1);
     }
     if (number == 3) {
-      sentence =
-          "Sentence 3 (i.e: Manager, the printer is broken, we need to purchase a new one.)";
+      sentence = await text.voiceApiCall(2);
     }
     return sentence;
-  }//Return the corresponding sentences based on the internally stored key sentence, the key will take 3 values 1,2,3
-
+  } //Return the corresponding sentences based on the internally stored key sentence, the key will take 3 values 1,2,3
 
   @override
   Widget build(BuildContext context) {
@@ -143,8 +137,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         title: "Register",
         leadingIcon: Icons.chevron_left,
         leadingTap: () {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-              Approutes.USER, (route) => false);
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(Approutes.USER, (route) => false);
         },
       ),
       body: Container(
@@ -179,7 +173,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           GestureDetector(
             onLongPress: () {
               _checkPermissionAndStartRecording();
-              callAPi.voiceApiCall(0);
             },
             onLongPressUp: () {
               _stopRecording();
@@ -200,7 +193,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
           Text(
             "00 : ${_elapsedSeconds.toString().padLeft(2, '0')}",
-            style: AppStyle.headlineStyle2.copyWith(color: Appcolor.backupColor),
+            style:
+                AppStyle.headlineStyle2.copyWith(color: Appcolor.backupColor),
           ),
         ]),
       ),
