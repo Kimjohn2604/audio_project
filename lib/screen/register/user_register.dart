@@ -14,7 +14,6 @@ class UserScreen extends StatefulWidget {
   State<UserScreen> createState() => _UserScreenState();
 }
 
-final _callApi = ApiSimulator();
 
 class _UserScreenState extends State<UserScreen> {
   String textValue = "";
@@ -34,14 +33,17 @@ class _UserScreenState extends State<UserScreen> {
 
   Future<void> checkText(BuildContext context) async {
     if (formKey.currentState!.validate()) {
-      final result = await _callApi
-          .simulateApiCall(storageUsername.getItem(StorageKey.username));
-      if (result) {
+      final result = await ApiSimulator
+          .enrollApiCall(storageUsername.getItem(StorageKey.username));
+      storageUsername.setItem(StorageKey.token, result);
+      if (result.isNotEmpty) {
         Navigator.of(context).pushNamed(Approutes.REGISTER);
         storageSentence.setItem(StorageKey.sentence, 1);
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("User already exists")));
+       /*  ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("User already exists"))); */
+            Navigator.of(context).pushNamed(Approutes.REGISTER);
+        storageSentence.setItem(StorageKey.sentence, 1);
       }
     }
   } //Check if the current state of the Form is valid and save to sentence Key

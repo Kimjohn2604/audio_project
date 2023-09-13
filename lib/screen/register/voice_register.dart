@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:app/component/storage_key.dart';
 import 'package:app/route/name.dart';
+import 'package:app/screen/call_api.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:path/path.dart' as path;
@@ -31,6 +32,8 @@ Codec codec = Codec.defaultCodec;
 
 late Timer _recordingTimer;
 int _elapsedSeconds = 0;
+
+final callAPi = ApiSimulator();
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final LocalStorage storageSentence = LocalStorage(StorageKey.sentence);
@@ -112,6 +115,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   String _loadSentence() {
+    final text= ApiSimulator();
+
     String sentence = "Sentence 1 (i.e: Hanoi is the capital of Vietnam)";
     int? number = storageSentence.getItem(StorageKey.sentence);
 
@@ -174,6 +179,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           GestureDetector(
             onLongPress: () {
               _checkPermissionAndStartRecording();
+              callAPi.voiceApiCall(0);
             },
             onLongPressUp: () {
               _stopRecording();

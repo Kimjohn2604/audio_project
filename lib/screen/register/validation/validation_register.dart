@@ -21,11 +21,11 @@ class _RegisterValidationState extends State<RegisterValidation> {
   void initState() {
     // call api from backend
     super.initState();
-   /*  Future<bool> passed = _callApi.simulateApiCall(storage.getItem(StorageKey.username));
+   Future<String> passed = _callApi.voiceApiCall(0);
 
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (await passed) {
-        int currentNumber = storage.getItem(StorageKey.sentence);
+        int currentNumber = storage.getItem(StorageKey.token);
         /* if (currentNumber > 3) {
           storage.setItem(StorageKey.sentence, 1);
           await Navigator.of(context)
@@ -36,7 +36,7 @@ class _RegisterValidationState extends State<RegisterValidation> {
               .pushNamedAndRemoveUntil(Approutes.SUCCESS_REGISTRATION, (route) => false);
       }
       await Navigator.of(context).pushNamedAndRemoveUntil(Approutes.FAILURE_REGISTRATION, (route) => false);
-    }); */
+    }); 
   }
 
   @override
