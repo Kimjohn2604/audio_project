@@ -9,7 +9,7 @@ class ApiSimulator {
   static Future<String> enrollApiCall(String username) async {
     Map<String, dynamic> data;
     // Tạo URL của API
-    final apiUrl = Uri.http('10.250.194.245:8080', 'api/v1/enroll');
+    final apiUrl = Uri.http('11.11.7.18:5000', 'api/v1/enroll');
     final requestData = {
       "username": username,
     };
@@ -33,8 +33,7 @@ class ApiSimulator {
   Future<String> voiceApiCall(int number) async {
     String getToken = storageUsername.getItem(StorageKey.token);
          
-    print("storage: $getToken");
-    final apiUrl = Uri.http('10.250.194.245:8080', 'api/v1/voice/$number');
+    final apiUrl = Uri.http('11.11.7.18:5000', 'api/v1/voice/$number');
     final response = await http.get(
       apiUrl,
       headers: <String, String>{
@@ -45,7 +44,6 @@ class ApiSimulator {
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
       String sentence = data["data"];
-      print("data: $sentence");
       return sentence;
     } else {
       throw Exception('Failed to call API');
