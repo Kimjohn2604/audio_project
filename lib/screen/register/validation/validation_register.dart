@@ -22,15 +22,18 @@ class _RegisterValidationState extends State<RegisterValidation> {
     // call api from backend
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      String passed =await _callApi.voiceApiCall(0);
-      if (passed.isNotEmpty) {
-        int currentNumber = storage.getItem(StorageKey.sentence);
+      int currentNumber = storage.getItem(StorageKey.sentence);
+      final postApi = await _callApi.postVoiceApiCall(
+          '/sdcard/Download/audio_$currentNumber.wav', 0);
+      String getApi = await _callApi.voiceApiCall(0);
+      if (getApi.isNotEmpty || postApi["data"] == null) {
         storage.setItem(StorageKey.sentence, currentNumber + 1);
-        await  Navigator.of(context)
-              .pushNamedAndRemoveUntil(Approutes.SUCCESS_REGISTRATION, (route) => false);
+        await Navigator.of(context).pushNamedAndRemoveUntil(
+            Approutes.FAILURE_REGISTRATION, (route) => false);
       }
-      await Navigator.of(context).pushNamedAndRemoveUntil(Approutes.FAILURE_REGISTRATION, (route) => false);
-    }); 
+      await Navigator.of(context).pushNamedAndRemoveUntil(
+          Approutes.FAILURE_REGISTRATION, (route) => false);
+    });
   }
 
   @override

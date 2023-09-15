@@ -1,14 +1,17 @@
 import 'package:app/component/colors.dart';
+import 'package:app/component/storage_key.dart';
 import 'package:app/component/style.dart';
 import 'package:app/route/name.dart';
 import 'package:app/widget/box.dart';
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 
 class InvalidRegistration extends StatelessWidget {
-  const InvalidRegistration({super.key});
-
+   InvalidRegistration({super.key});
+  final LocalStorage storage = LocalStorage(StorageKey.sentence);
   @override
   Widget build(BuildContext context) {
+    int currentNumber = storage.getItem(StorageKey.sentence);
     return Scaffold(
       body: Center(
         child: SizedBox(

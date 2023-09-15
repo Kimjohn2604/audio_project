@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         Approutes.SIGNIN_VALIDATION: (context) => const SigninValidation(),
         Approutes.SUCCESS_REGISTRATION: (context) => ValidRegistration(),
         Approutes.FAILURE_REGISTRATION: (context) =>
-            const InvalidRegistration(),
+             InvalidRegistration(),
         Approutes.SUCCESS_SIGNIN: (context) => ValidLogin(),
       },
     );

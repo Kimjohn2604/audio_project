@@ -55,10 +55,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<String> _getRecordedFilePath(String extension) async {
-    /* / Directory appDir = await getApplicationDocumentsDirectory(); / */
     String folderPath = "/sdcard/Download/";
-    final random = Random();
-    String fileName = "audio_${random.nextInt(10000)}.$extension";
+    String fileName =
+        "audio_${storageSentence.getItem(StorageKey.sentence)}.$extension";
     return path.join(folderPath, fileName);
   } //Hàm _getRecordedFilePath() trả về đường dẫn tới tệp ghi âm
 
@@ -88,12 +87,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  @override
-  void dispose() {
-    _audioRecorder.closeRecorder();
-    super.dispose();
-  }
-
   void _startRecordingTimer() {
     _recordingTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_elapsedSeconds >= 30) {
@@ -105,34 +98,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
-  void _stopRecordingTimer() {
+  Future<void> _stopRecordingTimer() async {
+    _recordedFilePath = await _getRecordedFilePath("wav");
     _recordingTimer.cancel();
     setState(() {
       _elapsedSeconds = 0;
     });
-    Navigator.of(context).pushNamedAndRemoveUntil(
+    await callAPi.postVoiceApiCall(_recordedFilePath, 0);
+   Navigator.of(context).pushNamedAndRemoveUntil(
         Approutes.REGISTER_VALIDATION, (route) => false);
+    
   }
 
   String sentence = "";
-
   void _loadSentence() async {
-    final text = ApiSimulator();
-    String data = await text.voiceApiCall(0);
+    String data = await callAPi.voiceApiCall(0);
     int? number = storageSentence.getItem(StorageKey.sentence);
     if (number == null) {
       storageSentence.setItem(StorageKey.sentence, 1);
     }
     if (number == 2) {
-      data = await text.voiceApiCall(1);
+      data = await callAPi.voiceApiCall(1);
     }
     if (number == 3) {
-      data = await text.voiceApiCall(2);
+      data = await callAPi.voiceApiCall(2);
     }
     setState(() {
       sentence = data;
     });
   } //Return the corresponding sentences based on the internally stored key sentence, the key will take 3 values 1,2,3
+
+  @override
+  void dispose() {
+    _audioRecorder.closeRecorder();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
