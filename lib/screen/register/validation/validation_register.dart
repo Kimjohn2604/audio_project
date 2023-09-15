@@ -24,8 +24,8 @@ class _RegisterValidationState extends State<RegisterValidation> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       int currentNumber = storage.getItem(StorageKey.sentence);
       final postApi = await _callApi.postVoiceApiCall(
-          '/sdcard/Download/audio_$currentNumber.wav', 0);
-      String getApi = await _callApi.voiceApiCall(0);
+          '/sdcard/Download/audio_$currentNumber.wav', currentNumber - 1); // bắt đầu từ 0
+      String getApi = await _callApi.voiceApiCall(currentNumber - 1);
       if (getApi.isNotEmpty || postApi["data"] != null) { // nếu đúng thì vào đây + 1
         storage.setItem(StorageKey.sentence, currentNumber + 1);
         await Navigator.of(context).pushNamedAndRemoveUntil(
