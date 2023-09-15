@@ -26,13 +26,14 @@ class _RegisterValidationState extends State<RegisterValidation> {
       final postApi = await _callApi.postVoiceApiCall(
           '/sdcard/Download/audio_$currentNumber.wav', 0);
       String getApi = await _callApi.voiceApiCall(0);
-      if (getApi.isNotEmpty || postApi["data"] == null) {
+      if (getApi.isNotEmpty || postApi["data"] != null) { // nếu đúng thì vào đây + 1
         storage.setItem(StorageKey.sentence, currentNumber + 1);
+        await Navigator.of(context).pushNamedAndRemoveUntil(
+            Approutes.SUCCESS_REGISTRATION, (route) => false);
+      } else {// như vậy thôi k làm hết
         await Navigator.of(context).pushNamedAndRemoveUntil(
             Approutes.FAILURE_REGISTRATION, (route) => false);
       }
-      await Navigator.of(context).pushNamedAndRemoveUntil(
-          Approutes.FAILURE_REGISTRATION, (route) => false);
     });
   }
 

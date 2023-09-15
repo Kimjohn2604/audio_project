@@ -69,6 +69,9 @@ class ApiSimulator {
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
     // Xử lý phản hồi
+    if(response.statusCode != 200){
+        
+    }
     Map<String, dynamic> data = json.decode(response.body);
     print("received: $data");
     return data;
