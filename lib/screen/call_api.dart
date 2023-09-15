@@ -7,31 +7,31 @@ import 'package:localstorage/localstorage.dart';
 import 'package:http_parser/http_parser.dart';
 
 class ApiSimulator {
+
+  //Takes a username stored in Local Storage
   final LocalStorage storageUsername = LocalStorage(StorageKey.username);
+
+  //hàm để nhập vào 1 username và lưu nó trong Local Storage
   static Future<String> enrollApiCall(String username) async {
     Map<String, dynamic> data;
-    // Tạo URL của API
     final apiUrl = Uri.http('11.11.7.18:5000', 'api/v1/enroll');
     final requestData = {
-      "username": username,
+      "username": username, 
     };
-
-    // Gửi yêu cầu API
     final response = await http.post(
       apiUrl,
       body: jsonEncode(requestData),
     );
-
     if (response.statusCode == 200) {
       data = jsonDecode(response.body);
       String token = data["data"]["token"];
       print("token:$token");
       return token;
     } else {
-      return "";
+      throw Exception('Failed to call API');
     }
   }
-
+  //
   Future<String> voiceApiCall(int number) async {
     String getToken = storageUsername.getItem(StorageKey.token);
 
@@ -51,7 +51,8 @@ class ApiSimulator {
     }
   }
 
-  Future<Map<String,dynamic>> postVoiceApiCall(String filePath, int number) async {
+  Future<Map<String, dynamic>> postVoiceApiCall(
+      String filePath, int number) async {
     String getToken = storageUsername.getItem(StorageKey.token);
     final postApiUrl = Uri.http('11.11.7.18:5000', 'api/v1/voice/$number');
     final request = http.MultipartRequest('POST', postApiUrl);
@@ -69,9 +70,48 @@ class ApiSimulator {
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
     // Xử lý phản hồi
-    if(response.statusCode != 200){
-        
+    if (response.statusCode != 200) {}
+    Map<String, dynamic> data = json.decode(response.body);
+    print("received: $data");
+    return data;
+  }
+
+  Future<Map<String, dynamic>> biometricApi() async {
+    String getToken = storageUsername.getItem(StorageKey.token);
+
+    final apiUrl = Uri.http('11.11.7.18:5000', 'api/v1/biometrics');
+    final response = await http.post(
+      apiUrl,
+      headers: <String, String>{
+        'Authorization': 'ABC $getToken',
+      },
+    );
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = jsonDecode(response.body);
+      print(data);
+      return data;
+    } else {
+      throw Exception('Failed to call API');
     }
+  }
+
+  Future<Map<String, dynamic>> verifyApi(String filePath, int number) async {
+    String getToken = storageUsername.getItem(StorageKey.token);
+    final postApiUrl = Uri.http('11.11.7.18:5000', 'api/v1/voice/$number');
+    final request = http.MultipartRequest('POST', postApiUrl);
+    request.headers.addAll({
+      "Authorization": "Bearer $getToken",
+      "contentType":
+          'multipart/form-data;boundary=<calculated when request is sent>'
+    });
+    File imageFile = File(filePath);
+    request.files.add(await http.MultipartFile.fromPath(
+        'filearg', imageFile.path,
+        contentType: MediaType("audio", "wave")));
+    request.fields['format'] = 'wav';
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+    if (response.statusCode != 200) {}
     Map<String, dynamic> data = json.decode(response.body);
     print("received: $data");
     return data;

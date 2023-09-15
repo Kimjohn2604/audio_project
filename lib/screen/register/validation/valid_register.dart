@@ -2,6 +2,7 @@ import 'package:app/component/colors.dart';
 import 'package:app/component/storage_key.dart';
 import 'package:app/component/style.dart';
 import 'package:app/route/name.dart';
+import 'package:app/screen/call_api.dart';
 import 'package:app/widget/box.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
@@ -9,7 +10,7 @@ import 'package:localstorage/localstorage.dart';
 class ValidRegistration extends StatelessWidget {
   ValidRegistration({super.key});
   final LocalStorage storage = LocalStorage(StorageKey.sentence);
-
+  final callAPi = ApiSimulator();
   @override
   Widget build(BuildContext context) {
     int currentNumber = storage.getItem(StorageKey.sentence);
@@ -31,6 +32,7 @@ class ValidRegistration extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   if (currentNumber > 3) {
+                     callAPi.biometricApi();
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         Approutes.INITIAL, (route) => false);
                   } else {
